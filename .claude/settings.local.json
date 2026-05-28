@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(Get-ChildItem -Path \"C:\\\\Users\\\\DELL\\\\Downloads\\\\erp\\\\erp\\\\src\\\\main\\\\java\\\\com\\\\gov\\\\rw\\\\erp\" -Recurse | Where-Object {-not $_.PSIsContainer} | Select-Object FullName | ForEach-Object {$_.FullName -replace [regex]::Escape\\(\"C:\\\\Users\\\\DELL\\\\Downloads\\\\erp\\\\erp\"\\), \"\"})",
+      "PowerShell(Get-ChildItem -Path \"C:\\\\Users\\\\DELL\\\\Downloads\\\\erp\\\\erp\\\\src\\\\main\\\\resources\" -Recurse | Where-Object {-not $_.PSIsContainer} | Select-Object FullName | ForEach-Object {$_.FullName -replace [regex]::Escape\\(\"C:\\\\Users\\\\DELL\\\\Downloads\\\\erp\\\\erp\"\\), \"\"})"
+    ]
+  }
+}
