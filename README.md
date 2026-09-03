@@ -89,28 +89,48 @@ cd erp_payroll_management_system
 CREATE DATABASE erp_db;
 ```
 
-### 3. Configure `application.properties`
+### 3. Create your local `application.properties`
 
-Update `src/main/resources/application.properties` with your own values:
+`application.properties` is git-ignored so that credentials never enter version
+control. Copy the template:
 
-```properties
-# Database
-spring.datasource.url=jdbc:postgresql://localhost:5432/erp_db
-spring.datasource.username=YOUR_DB_USERNAME
-spring.datasource.password=YOUR_DB_PASSWORD
-
-# JWT
-app.jwt.secret=YOUR_BASE64_SECRET
-app.jwt.expiration-ms=86400000
-
-# Mail (Gmail example)
-spring.mail.host=smtp.gmail.com
-spring.mail.port=587
-spring.mail.username=YOUR_EMAIL
-spring.mail.password=YOUR_APP_PASSWORD
+```bash
+cp src/main/resources/application.properties.example \
+   src/main/resources/application.properties
 ```
 
-### 4. Run the application
+The template reads every secret from an environment variable, so no credential
+is ever written to a file in the repository:
+
+| Variable | Purpose |
+|---|---|
+| `DB_USERNAME` | PostgreSQL user |
+| `DB_PASSWORD` | PostgreSQL password |
+| `JWT_SECRET` | Base64 signing key for JWTs — generate with `openssl rand -base64 48` |
+| `MAIL_USERNAME` | SMTP account used to send OTPs and payslips |
+| `MAIL_PASSWORD` | SMTP password (for Gmail, an App Password) |
+
+### 4. Export the environment variables
+
+```bash
+export DB_USERNAME=postgres
+export DB_PASSWORD=...
+export JWT_SECRET="$(openssl rand -base64 48)"
+export MAIL_USERNAME=...
+export MAIL_PASSWORD=...
+```
+
+On Windows PowerShell:
+
+```powershell
+$env:DB_USERNAME = "postgres"
+$env:DB_PASSWORD = "..."
+$env:JWT_SECRET  = "..."
+$env:MAIL_USERNAME = "..."
+$env:MAIL_PASSWORD = "..."
+```
+
+### 5. Run the application
 
 ```bash
 ./mvnw spring-boot:run
@@ -129,6 +149,10 @@ Seeded automatically on first startup by `DataInitializer`:
 | Email | `admin@gov.rw` |
 | Password | `Admin@12345` |
 | Role | `ADMIN` |
+
+> **Development credentials only.** This password is hardcoded in
+> `DataInitializer` and is public in this README — change it immediately after
+> first login, and do not deploy any environment that still accepts it.
 
 ---
 

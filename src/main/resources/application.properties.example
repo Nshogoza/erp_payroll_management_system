@@ -1,0 +1,80 @@
+# ======================================
+# Template — copy to application.properties and supply real values.
+#
+#   cp src/main/resources/application.properties.example \
+#      src/main/resources/application.properties
+#
+# application.properties is git-ignored. Never commit real credentials.
+# Every ${VAR} below is read from an environment variable at startup.
+# ======================================
+
+# ======================================
+# Application
+# ======================================
+spring.application.name=erp
+app.institution.name=Government of Rwanda
+
+# ======================================
+# Database (PostgreSQL)
+# ======================================
+spring.datasource.url=jdbc:postgresql://localhost:5432/erp_db
+spring.datasource.username=${DB_USERNAME}
+spring.datasource.password=${DB_PASSWORD}
+spring.datasource.driver-class-name=org.postgresql.Driver
+
+# ======================================
+# JPA / Hibernate
+# ======================================
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format_sql=true
+spring.jpa.open-in-view=false
+
+# ======================================
+# JWT
+# Generate a fresh base64 secret, e.g.:
+#   openssl rand -base64 48
+# ======================================
+app.jwt.secret=${JWT_SECRET}
+app.jwt.expiration-ms=86400000
+
+# ======================================
+# Mail (configure your SMTP provider)
+# For Gmail, MAIL_PASSWORD must be an App Password, not the account password.
+# ======================================
+spring.mail.host=smtp.gmail.com
+spring.mail.port=587
+spring.mail.username=${MAIL_USERNAME}
+spring.mail.password=${MAIL_PASSWORD}
+spring.mail.properties.mail.smtp.auth=true
+spring.mail.properties.mail.smtp.starttls.enable=true
+spring.mail.properties.mail.smtp.starttls.required=true
+
+# ======================================
+# Async Thread Pool
+# ======================================
+spring.task.execution.pool.core-size=5
+spring.task.execution.pool.max-size=10
+spring.task.execution.pool.queue-capacity=100
+spring.task.execution.thread-name-prefix=erp-async-
+
+# ======================================
+# Jackson (Jackson 3.x / Spring Boot 4.x — WRITE_DATES_AS_TIMESTAMPS removed;
+# ISO-8601 date serialization is the default. NON_NULL inclusion still supported.)
+# ======================================
+spring.jackson.default-property-inclusion=non_null
+
+# ======================================
+# OpenAPI / Swagger
+# ======================================
+springdoc.api-docs.path=/v3/api-docs
+springdoc.swagger-ui.path=/swagger-ui.html
+springdoc.swagger-ui.operationsSorter=method
+springdoc.swagger-ui.tagsSorter=alpha
+
+# ======================================
+# Logging
+# ======================================
+logging.level.com.gov.rw.erp=DEBUG
+logging.level.org.springframework.security=INFO
+logging.level.org.hibernate.SQL=DEBUG

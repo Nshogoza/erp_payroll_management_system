@@ -4,6 +4,15 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+### Secrets — local config, never commit ###
+src/main/resources/application.properties
+src/main/resources/application-*.properties
+!src/main/resources/application.properties.example
+.env
+
+### Claude Code ###
+.claude/
+
 ### STS ###
 .apt_generated
 .classpath
